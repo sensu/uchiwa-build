@@ -20,19 +20,15 @@ GEM
       json (= 1.6.6)
     ipaddress (0.8.0)
     json (1.6.6)
-    mime-types (1.25.1)
     mixlib-cli (1.5.0)
     mixlib-config (2.1.0)
     mixlib-log (1.6.0)
-    mixlib-shellout (1.4.0)
-    ohai (7.0.4)
+    ohai (6.14.0)
       ipaddress
-      mime-types (~> 1.16)
       mixlib-cli
-      mixlib-config (~> 2.0)
+      mixlib-config
       mixlib-log
-      mixlib-shellout (~> 1.2)
-      systemu (~> 2.5.2)
+      systemu
       yajl-ruby
     rake (10.3.2)
     systemu (2.5.2)
@@ -43,4 +39,5 @@ PLATFORMS
 
 DEPENDENCIES
   bunchr
+  ohai (= 6.14.0)
   systemu (= 2.5.2)

@@ -1,4 +1,5 @@
 gem 'systemu', '2.5.2'
+gem 'ohai', '6.14.0'
 gem 'bunchr', '0.1.5'
 
 require 'bunchr'
@@ -49,17 +50,16 @@ Bunchr::Packages.new do |t|
       t.scripts[:after_remove]   = 'pkg_scripts/rpm/postun'
     end
 
-    t.include_software('build_tools')
     t.include_software('node')
-    t.include_software('uchiwa')
-    t.include_software('uchiwa_configs')
-    t.include_software('uchiwa_bin_stubs')
+#    t.include_software('uchiwa')
+#    t.include_software('uchiwa_configs')
+#    t.include_software('uchiwa_bin_stubs')
 
     t.files << Bunchr.install_dir
-    t.files << '/etc/default/uchiwa'
-    t.files << '/etc/init.d/uchiwa'
+#    t.files << '/etc/default/uchiwa'
+#    t.files << '/etc/init.d/uchiwa'
 
-    t.config_files << '/etc/sensu/uchiwa.json'
+#    t.config_files << '/etc/sensu/uchiwa.json'
   end
 end
 
