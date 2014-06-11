@@ -4,9 +4,6 @@ Bunchr::Software.new do |t|
 
   install_prefix = "#{Bunchr.install_dir}/embedded"
 
-  os   = t.ohai['os']
-  arch = t.ohai['kernel']['machine']
-
   t.download_commands << "curl -O http://nodejs.org/dist/#{t.version}/node-#{t.version}.tar.gz"
   t.download_commands << "tar xfvz node-#{t.version}.tar.gz"
 
