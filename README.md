@@ -8,6 +8,9 @@ Centos 6.5.
 ### Run
 
 ```
+export UCHIWA_VERSION=0.1.2
+export BUILD_NUMBER=1
+bundle install
 vagrant up
 ./scripts/upload
 ./scripts/clean
