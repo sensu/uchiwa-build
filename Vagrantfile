@@ -11,8 +11,8 @@ end
 
 opscode_bento = 'http://opscode-vm-bento.s3.amazonaws.com/vagrant/virtualbox'
 build_boxes = {
-  :centos_5_32    => "#{opscode_bento}/opscode_centos-5.10-i386_chef-provisionerless.box",
-  :centos_5_64    => "#{opscode_bento}/opscode_centos-5.10_chef-provisionerless.box",
+  :centos_6_32    => "#{opscode_bento}/opscode_centos-6.5-i386_chef-provisionerless.box",
+  :centos_6_64    => "#{opscode_bento}/opscode_centos-6.5_chef-provisionerless.box",
   :ubuntu_1204_32 => "#{opscode_bento}/opscode_ubuntu-12.04-i386_chef-provisionerless.box",
   :ubuntu_1204_64 => "#{opscode_bento}/opscode_ubuntu-12.04_chef-provisionerless.box",
 }

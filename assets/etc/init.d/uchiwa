@@ -31,7 +31,6 @@ start() {
   # Run the program!
   chroot --userspec uchiwa:uchiwa / sh -c "
     cd /opt/uchiwa/usr/src/uchiwa
-    nice 0
     exec \"$program\" $args
   " > /var/log/$name.log 2> /var/log/$name.err &
 

@@ -1,6 +1,8 @@
 Bunchr::Software.new do |t|
   t.name = 'uchiwa'
 
+  t.depends_on('node')
+
   if ENV['UCHIWA_VERSION'].nil?
     raise "Must set env var 'UCHIWA_VERSION'"
   end
@@ -13,6 +15,10 @@ Bunchr::Software.new do |t|
 
   t.build_commands << "mkdir -p #{install_prefix}"
   t.build_commands << "cp -r . #{install_prefix}/"
+
+  npm_bin = "/opt/uchiwa/embedded/bin/npm"
+  t.install_commands << "cd #{install_prefix} && #{npm_bin} install"
+  t.install_commands << "chown -R root:root #{install_prefix}"
 
   CLEAN << install_prefix
 end
