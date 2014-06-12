@@ -18,13 +18,14 @@ build_boxes = {
 }
 
 Vagrant.configure("2") do |config|
-  config.vm.provider "virtualbox" do |vm|
-    vm.memory = 1024
+  config.vm.provider 'virtualbox' do |vm|
+    vm.memory = 750
     vm.cpus = 1
   end
+  config.vm.provision 'shell', :path => 'install_dependencies.sh'
   config.vm.provision "shell",
     :inline => "/bin/bash --login -c ' \
-                export PATH=/usr/local/rvm/bin:$PATH ; \
+                export VAGRANT_BOX=true ; \
                 export UCHIWA_VERSION=#{ENV['UCHIWA_VERSION']} ; \
                 export BUILD_NUMBER=#{ENV['BUILD_NUMBER']} ; \
                 cd /vagrant && ./build.sh && shutdown -h now'"

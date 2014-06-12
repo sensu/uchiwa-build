@@ -1,9 +1,12 @@
 gem 'systemu', '2.5.2'
-gem 'ohai', '6.14.0'
 gem 'bunchr', '0.1.5'
 
 require 'bunchr'
 require 'fileutils'
+
+if ENV['VAGRANT_BOX'].nil?
+  raise "You do not want to run this on your local machine!"
+end
 
 if ENV['UCHIWA_VERSION'].nil?
   raise "Please set ENV['UCHIWA_VERSION'] and re-run."
@@ -51,15 +54,14 @@ Bunchr::Packages.new do |t|
     end
 
     t.include_software('node')
-#    t.include_software('uchiwa')
-#    t.include_software('uchiwa_configs')
-#    t.include_software('uchiwa_bin_stubs')
+    t.include_software('uchiwa')
+    t.include_software('uchiwa_assets')
 
     t.files << Bunchr.install_dir
-#    t.files << '/etc/default/uchiwa'
-#    t.files << '/etc/init.d/uchiwa'
+    t.files << '/etc/init.d/uchiwa'
+    t.files << '/etc/default/uchiwa'
 
-#    t.config_files << '/etc/sensu/uchiwa.json'
+    t.config_files << '/etc/sensu/uchiwa.js'
   end
 end
 
