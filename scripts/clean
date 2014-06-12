@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo 'removing built packages ...'
+echo 'removing local packages ...'
 
 rm -f *.rpm *.gz *.deb
 
