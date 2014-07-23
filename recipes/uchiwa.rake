@@ -10,7 +10,7 @@ Bunchr::Software.new do |t|
 
   install_prefix = "#{Bunchr.install_dir}/usr/src/uchiwa"
 
-  t.download_commands << "curl -L -O https://github.com/palourde/uchiwa/archive/#{t.version}.tar.gz"
+  t.download_commands << "curl -L -O https://github.com/sensu/uchiwa/archive/#{t.version}.tar.gz"
   t.download_commands << "tar xfvz #{t.version}.tar.gz"
 
   t.build_commands << "mkdir -p #{install_prefix}"
