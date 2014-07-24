@@ -11,10 +11,10 @@ end
 
 opscode_bento = 'http://opscode-vm-bento.s3.amazonaws.com/vagrant/virtualbox'
 build_boxes = {
-  :centos_6_32    => "#{opscode_bento}/opscode_centos-6.5-i386_chef-provisionerless.box",
-  :centos_6_64    => "#{opscode_bento}/opscode_centos-6.5_chef-provisionerless.box",
-  :ubuntu_1204_32 => "#{opscode_bento}/opscode_ubuntu-12.04-i386_chef-provisionerless.box",
-  :ubuntu_1204_64 => "#{opscode_bento}/opscode_ubuntu-12.04_chef-provisionerless.box",
+  :centos_6_5_32   => "#{opscode_bento}/opscode_centos-6.5-i386_chef-provisionerless.box",
+  :centos_6_5_64   => "#{opscode_bento}/opscode_centos-6.5_chef-provisionerless.box",
+  :ubuntu_10_04_32 => "#{opscode_bento}/opscode_ubuntu-10.04-i386_chef-provisionerless.box",
+  :ubuntu_10_04_64 => "#{opscode_bento}/opscode_ubuntu-10.04_chef-provisionerless.box",
 }
 
 Vagrant.configure("2") do |config|
@@ -22,13 +22,13 @@ Vagrant.configure("2") do |config|
     vm.memory = 750
     vm.cpus = 1
   end
+  config.omnibus.chef_version = '11.12.8'
   config.vm.provision 'shell', :path => 'install_dependencies.sh'
   config.vm.provision "shell",
-    :inline => "/bin/bash --login -c ' \
-                export VAGRANT_BOX=true ; \
+    :inline => "export VAGRANT_BOX=true ; \
                 export UCHIWA_VERSION=#{ENV['UCHIWA_VERSION']} ; \
                 export BUILD_NUMBER=#{ENV['BUILD_NUMBER']} ; \
-                cd /vagrant && ./build.sh && shutdown -h now'"
+                cd /vagrant && ./build.sh && shutdown -h now"
   build_boxes.each do |name, url|
     config.vm.define name do |build_box|
       build_box.vm.box = name.to_s
