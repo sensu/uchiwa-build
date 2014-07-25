@@ -32,12 +32,12 @@ case "$system" in
     redhat)
         yum clean all
         install_epel
-        yum -y install curl m4 make gcc gcc-c++ rpm-build python26
+        yum -y install curl m4 make gcc gcc-c++ rpm-build python26 git
         ;;
 
     debian)
         apt-get update
-        apt-get -y install curl m4 g++ make gcc
+        apt-get -y install curl m4 g++ make gcc git-core
         ;;
 
     *)
