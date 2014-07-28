@@ -29,7 +29,7 @@ pidfile="/var/run/$name.pid"
 start() {
 
   # Run the program!
-  chroot --userspec uchiwa:uchiwa / sh -c "
+  chroot --userspec uchiwa:uchiwa --groups sensu / sh -c "
     cd /opt/uchiwa/usr/src/uchiwa
     exec \"$program\" $args
   " > /var/log/$name.log 2> /var/log/$name.err &
