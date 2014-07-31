@@ -20,7 +20,7 @@ export PATH
 
 name=uchiwa
 program=/opt/uchiwa/embedded/bin/node
-args="app.js -c /etc/sensu/uchiwa.js"
+args="app.js -c /etc/sensu/uchiwa.json"
 pidfile="/var/run/$name.pid"
 
 [ -r /etc/default/$name ] && . /etc/default/$name

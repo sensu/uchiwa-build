@@ -62,7 +62,7 @@ Bunchr::Packages.new do |t|
     t.files << '/etc/init.d/uchiwa'
     t.files << '/etc/default/uchiwa'
 
-    t.config_files << '/etc/sensu/uchiwa.js'
+    t.config_files << '/etc/sensu/uchiwa.json'
   end
 end
 
