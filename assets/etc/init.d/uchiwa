@@ -28,7 +28,7 @@ coreutils_required=8
 [ -r /etc/default/$name ] && . /etc/default/$name
 [ -r /etc/sysconfig/$name ] && . /etc/sysconfig/$name
 
-if [ $( echo $coreutils_version'>'$coreutils_required | bc -l) -eq 0 ]; then
+if [ $(echo $coreutils_version'>'$coreutils_required | bc -l) -eq 0 ]; then
   chroot_script="su -s /bin/sh uchiwa"
 else
   chroot_script="chroot --userspec uchiwa:uchiwa --groups sensu /"
