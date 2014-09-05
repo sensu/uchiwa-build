@@ -22,14 +22,22 @@ name=uchiwa
 program=/opt/uchiwa/embedded/bin/node
 args="app.js -c /etc/sensu/uchiwa.json"
 pidfile="/var/run/$name.pid"
+coreutils_version=$(chroot --version | head -n 1 | awk '{print $4}')
+coreutils_required=8
 
 [ -r /etc/default/$name ] && . /etc/default/$name
 [ -r /etc/sysconfig/$name ] && . /etc/sysconfig/$name
 
+if [ $(echo $coreutils_version'>'$coreutils_required | bc -l) -eq 0 ]; then
+  chroot_script="su -s /bin/sh uchiwa"
+else
+  chroot_script="chroot --userspec uchiwa:uchiwa --groups sensu /"
+fi
+
 start() {
 
   # Run the program!
-  chroot --userspec uchiwa:uchiwa --groups sensu / sh -c "
+  $chroot_script sh -c "
     cd /opt/uchiwa/usr/src/uchiwa
     exec \"$program\" $args
   " > /var/log/$name.log 2> /var/log/$name.err &
