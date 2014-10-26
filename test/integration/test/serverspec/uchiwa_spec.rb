@@ -16,8 +16,10 @@ describe 'Uchiwa package' do
 end
 
 describe 'Uchiwa service' do
-  it 'running' do
-    expect(service 'uchiwa').to be_running
+  if os[:family] != 'redhat' && !os[:release].start_with?('5')
+    it 'running' do
+      expect(service 'uchiwa').to be_running
+    end
   end
   it 'listen on port 3000' do
     expect(port 3000).to be_listening

@@ -29,6 +29,7 @@ when 'rhel'
   pkg = "uchiwa-#{node['uchiwa-build']['uchiwa_version']}-#{node['uchiwa-build']['build_number']}#{arch}#{ext}"
 
   package pkg do
+    options '--nogpgcheck'
     source "#{node['uchiwa-build']['workdir']}/#{pkg}"
   end
 
