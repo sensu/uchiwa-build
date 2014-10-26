@@ -4,3 +4,6 @@ vendor
 *.tar.gz
 *.deb
 *.rpm
+.kitchen/
+.kitchen.local.yml
+tmp
