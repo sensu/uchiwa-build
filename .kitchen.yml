@@ -1,0 +1,53 @@
+---
+driver:
+  name: vagrant
+  customize:
+    memory: 1024
+    cpus: 2
+  synced_folders:
+    - ["", "/tmp/build"]
+
+provisioner:
+  name: chef_solo
+
+platforms:
+  - name: centos65_64
+    driver:
+      box: centos_6_5_64
+      box_url: http://opscode-vm-bento.s3.amazonaws.com/vagrant/virtualbox/opscode_centos-6.5_chef-provisionerless.box
+      network:
+        - ["private_network", {ip: "10.30.70.70"}]
+  - name: centos65_32
+    driver:
+      box: centos_6_5_32
+      box_url: http://opscode-vm-bento.s3.amazonaws.com/vagrant/virtualbox/opscode_centos-6.5-i386_chef-provisionerless.box
+      network:
+        - ["private_network", {ip: "10.30.70.71"}]
+  - name: ubuntu1404_64
+    driver:
+      box: ubuntu_14_04_64
+      box_url: http://opscode-vm-bento.s3.amazonaws.com/vagrant/virtualbox/opscode_ubuntu-14.04_chef-provisionerless.box
+      network:
+        - ["private_network", {ip: "10.30.70.72"}]
+  - name: ubuntu1404_32
+    driver:
+      box: ubuntu_14_04_32
+      box_url: http://opscode-vm-bento.s3.amazonaws.com/vagrant/virtualbox/opscode_ubuntu-14.04-i386_chef-provisionerless.box
+      network:
+        - ["private_network", {ip: "10.30.70.73"}]
+
+suites:
+  - name: build
+    run_list:
+      - recipe[uchiwa-build]
+    attributes:
+      uchiwa-build:
+        uchiwa_version: <%= ENV['UCHIWA_VERSION'] %>
+        build_number: <%= ENV['BUILD_NUMBER'] %>
+  - name: test
+    run_list:
+      - recipe[uchiwa-build::test]
+    attributes:
+      uchiwa-build:
+        uchiwa_version: <%= ENV['UCHIWA_VERSION'] %>
+        build_number: <%= ENV['BUILD_NUMBER'] %>

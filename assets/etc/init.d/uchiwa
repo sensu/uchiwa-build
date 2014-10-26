@@ -19,8 +19,8 @@ PATH=/sbin:/usr/sbin:/bin:/usr/bin
 export PATH
 
 name=uchiwa
-program=/opt/uchiwa/embedded/bin/node
-args="app.js -c /etc/sensu/uchiwa.json"
+program=/opt/uchiwa/bin/uchiwa
+args="-c /etc/sensu/uchiwa.json -p /opt/uchiwa/src/public"
 pidfile="/var/run/$name.pid"
 
 [ -r /etc/default/$name ] && . /etc/default/$name
@@ -30,7 +30,7 @@ start() {
 
   # Run the program!
   chroot --userspec uchiwa:uchiwa --groups sensu / sh -c "
-    cd /opt/uchiwa/usr/src/uchiwa
+    cd /opt/uchiwa/src
     exec \"$program\" $args
   " > /var/log/$name.log 2> /var/log/$name.err &
 
