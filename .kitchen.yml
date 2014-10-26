@@ -7,9 +7,6 @@ driver:
   synced_folders:
     - ["", "/tmp/build"]
 
-busser:
-  sudo: true
-
 provisioner:
   name: chef_solo
 

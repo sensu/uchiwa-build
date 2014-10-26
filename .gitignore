@@ -1,6 +1,8 @@
+*~
 tmp
 vendor
 .vagrant
+*.swp
 *.tar.gz
 *.deb
 *.rpm
