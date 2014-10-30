@@ -88,12 +88,12 @@ end
   end
 
   execute "build_#{platform}_rpm" do
-    command "fpm -s dir -t rpm -n 'uchiwa' -C assets --rpm-os linux --rpm-user uchiwa --rpm-group sensu -v #{node['uchiwa-build']['uchiwa_version']} --iteration #{node['uchiwa-build']['build_number']} --epoch 1 --license MIT --vendor 'Simon Plourde' --category 'Monitoring' --url 'https://github.com/sensu/uchiwa' --description 'Uchiwa, a Sensu dashboard, created by Simon Plourde.' -a #{platform} --before-install pkg_scripts/rpm/pre --after-install pkg_scripts/rpm/post --before-remove pkg_scripts/rpm/preun --after-remove pkg_scripts/rpm/postun opt etc"
+    command "fpm -s dir -t rpm -n 'uchiwa' -C assets --rpm-os linux --rpm-user uchiwa --rpm-group sensu -v #{node['uchiwa-build']['uchiwa_version']} --iteration #{node['uchiwa-build']['build_number']} --epoch 1 --license MIT --vendor 'Simon Plourde' --category 'Monitoring' --url 'https://github.com/sensu/uchiwa' --description 'Uchiwa, a Sensu dashboard, created by Simon Plourde.' -a #{platform} --before-install pkg_scripts/rpm/pre --after-install pkg_scripts/rpm/post --before-remove pkg_scripts/rpm/preun --after-remove pkg_scripts/rpm/postun --config-files /etc/sensu/uchiwa.json opt etc"
     cwd node['uchiwa-build']['workdir']
   end
 
   execute "build_#{platform}_deb" do
-    command "fpm -s dir -t deb -n 'uchiwa' -C assets --rpm-os linux --rpm-user uchiwa --rpm-group sensu -v #{node['uchiwa-build']['uchiwa_version']} --iteration #{node['uchiwa-build']['build_number']} --license MIT --vendor 'Simon Plourde' --category 'Monitoring' --url 'https://github.com/sensu/uchiwa' --description 'Uchiwa, a Sensu dashboard, created by Simon Plourde.' -a #{platform} --after-install pkg_scripts/deb/postinst --before-remove pkg_scripts/deb/prerm --after-remove pkg_scripts/deb/postrm opt etc"
+    command "fpm -s dir -t deb -n 'uchiwa' -C assets --rpm-os linux --rpm-user uchiwa --rpm-group sensu -v #{node['uchiwa-build']['uchiwa_version']} --iteration #{node['uchiwa-build']['build_number']} --license MIT --vendor 'Simon Plourde' --category 'Monitoring' --url 'https://github.com/sensu/uchiwa' --description 'Uchiwa, a Sensu dashboard, created by Simon Plourde.' -a #{platform} --after-install pkg_scripts/deb/postinst --before-remove pkg_scripts/deb/prerm --after-remove pkg_scripts/deb/postrm --config-files /etc/sensu/uchiwa.json opt etc"
     cwd node['uchiwa-build']['workdir']
   end
 end
