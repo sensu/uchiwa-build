@@ -24,7 +24,7 @@ describe 'Uchiwa service' do
   it 'listen on port 3000' do
     expect(port 3000).to be_listening
   end
-  it 'not have errors' do
+  it 'does not have errors' do
     expect((command 'cat /var/log/uchiwa.err|wc -l').stdout).to eq "0\n"
   end
 end
