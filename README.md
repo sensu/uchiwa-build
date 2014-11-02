@@ -19,7 +19,7 @@ The packages are tested on the following platforms:
 ```
 export UCHIWA_VERSION=0.3.0
 export BUILD_NUMBER=1
-kitchen converge build-centos65-64
-kitchen destroy build-centos65-64
+kitchen converge build
+kitchen destroy build
 kitchen test test
 ```

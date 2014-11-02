@@ -11,37 +11,23 @@ provisioner:
   name: chef_solo
 
 platforms:
-  - name: centos65_64
-    driver:
-      box: centos_6_5_64
-      box_url: http://opscode-vm-bento.s3.amazonaws.com/vagrant/virtualbox/opscode_centos-6.5_chef-provisionerless.box
-  - name: centos65_32
-    driver:
-      box: centos_6_5_32
-      box_url: http://opscode-vm-bento.s3.amazonaws.com/vagrant/virtualbox/opscode_centos-6.5-i386_chef-provisionerless.box
-  - name: ubuntu1404_64
-    driver:
-      box: ubuntu_14_04_64
-      box_url: http://opscode-vm-bento.s3.amazonaws.com/vagrant/virtualbox/opscode_ubuntu-14.04_chef-provisionerless.box
-  - name: ubuntu1404_32
-    driver:
-      box: ubuntu_14_04_32
-      box_url: http://opscode-vm-bento.s3.amazonaws.com/vagrant/virtualbox/opscode_ubuntu-14.04-i386_chef-provisionerless.box
-  - name: centos511_64
-    driver:
-      box: centos_5_11_64
-      box_url: http://opscode-vm-bento.s3.amazonaws.com/vagrant/virtualbox/opscode_centos-5.11_chef-provisionerless.box
-  - name: ubuntu1004_64
-    driver:
-      box: ubuntu_10_04_64
-      box_url: http://opscode-vm-bento.s3.amazonaws.com/vagrant/virtualbox/opscode_ubuntu-10.04_chef-provisionerless.box
-  - name: ubuntu1204_64
-    driver:
-      box: ubuntu_12_04_64
-      box_url: http://opscode-vm-bento.s3.amazonaws.com/vagrant/virtualbox/opscode_ubuntu-12.04_chef-provisionerless.box
+  - name: centos-6.5
+  - name: centos-6.5-i386
+  - name: ubuntu-14.04
+  - name: ubuntu-14.10-i386
+  - name: centos-5.11
+  - name: ubuntu-10.04
+  - name: ubuntu-12.04
 
 suites:
   - name: build
+    excludes:
+      - centos-6.5-i386
+      - ubuntu-14.04
+      - ubuntu-14.10-i386
+      - centos-5.11
+      - ubuntu-10.04
+      - ubuntu-12.04
     run_list:
       - recipe[uchiwa-build]
     attributes:
