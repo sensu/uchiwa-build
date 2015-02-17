@@ -61,7 +61,7 @@ execute 'cleanup' do
 end
 
 execute 'copy_source' do
-  command "cp -R /root/go/src/#{node['uchiwa-build']['git']} #{uchiwa_src}"
+  command "mkdir -p #{uchiwa_src} && cp -R /root/go/src/#{node['uchiwa-build']['git']}/* #{uchiwa_src}/"
 end
 
 git uchiwa_src do
