@@ -18,33 +18,32 @@
 #
 
 go_bin = '/usr/local/go/bin'
+go_path = '/root/gopath'
 uchiwa_src = "#{node['uchiwa-build']['workdir']}/assets/opt/uchiwa/src"
+uchiwa_bin = "#{node['uchiwa-build']['workdir']}/assets/opt/uchiwa/bin"
 
 %w(git ruby ruby-devel rubygems gcc rpm-build).each do |pkg|
   package pkg
 end
 
+gem_package 'fpm'
+
 # Install Go
 remote_file "#{Chef::Config[:file_cache_path]}/go.tar.gz" do
   source node['uchiwa-build']['golang']
+  not_if { ::File.exists?("#{go_bin}/go") }
 end
+
 execute 'extract_go' do
   command "tar -C /usr/local -xzf #{Chef::Config[:file_cache_path]}/go.tar.gz"
+  not_if { ::File.exists?("#{go_bin}/go") }
 end
 
 execute 'cross_compile_go' do
   command './make.bash'
   environment ({ 'GOOS' => 'linux', 'GOARCH' => '386' })
   cwd '/usr/local/go/src'
-end
-
-execute 'get_uchiwa' do
-  command "#{go_bin}/go get #{node['uchiwa-build']['git']}"
-  environment ({ 'GOPATH' => '/root/go' })
-end
-
-execute 'install_fpm' do
-  command 'gem install fpm'
+  not_if { ::File.exists?("#{go_bin}/linux_386") }
 end
 
 remote_file "#{Chef::Config[:file_cache_path]}/setup" do
@@ -60,18 +59,30 @@ execute 'cleanup' do
   cwd node['uchiwa-build']['workdir']
 end
 
-execute 'copy_source' do
-  command "mkdir -p #{uchiwa_src} && cp -R /root/go/src/#{node['uchiwa-build']['git']}/. #{uchiwa_src}/"
+[ uchiwa_src, "#{go_path}/bin", "#{go_path}/src/github.com/sensu/uchiwa" ].each do |dir|
+  directory dir do
+    recursive true
+  end
 end
 
-git uchiwa_src do
+git "#{go_path}/src/github.com/sensu/uchiwa" do
   repository 'https://github.com/sensu/uchiwa.git'
   revision node['uchiwa-build']['uchiwa_version']
 end
 
+execute 'go_get' do
+  command "#{go_bin}/go get -t -v ./..."
+  cwd "#{go_path}/src/github.com/sensu/uchiwa"
+  environment ({ 'GOPATH' => "/root/gopath:#{go_path}/src/github.com/sensu/uchiwa/Godeps/_workspace", 'PATH' => "#{ENV['PATH']}:#{go_path}/bin:#{go_path}/src/github.com/sensu/uchiwa/Godeps/_workspace/bin" })
+end
+
 execute 'install_bower' do
-  command 'npm install --production && npm run postinstall && rm -rf node_modules'
-  cwd uchiwa_src
+  command 'npm install --production && npm run postinstall'
+  cwd "#{go_path}/src/github.com/sensu/uchiwa"
+end
+
+bash 'copy_public_folder' do
+  code "cp -R #{go_path}/src/github.com/sensu/uchiwa/public #{uchiwa_src}/"
 end
 
 %w(i386 x86_64).each do |platform|
@@ -82,9 +93,9 @@ end
   end
 
   execute "build_bin_#{platform}" do
-    command "#{go_bin}/go build -o ../bin/uchiwa"
-    environment ({ 'GOOS' => 'linux', 'GOARCH' => arch, 'GOPATH' => '/root/go' })
-    cwd uchiwa_src
+    command "#{go_bin}/go build -o #{uchiwa_bin}/uchiwa"
+    environment ({ 'GOOS' => 'linux', 'GOARCH' => arch, 'GOPATH' => "/root/gopath:#{go_path}/src/github.com/sensu/uchiwa/Godeps/_workspace" })
+    cwd "#{go_path}/src/github.com/sensu/uchiwa"
   end
 
   execute "build_#{platform}_rpm" do
