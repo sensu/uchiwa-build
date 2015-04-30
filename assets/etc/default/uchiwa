@@ -1,0 +1,3 @@
+# Limit the amount of virtual memory used in Kb
+# Empty means 'unlimited'
+MAX_VIRTUAL_MEMORY=
