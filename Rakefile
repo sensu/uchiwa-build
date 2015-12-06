@@ -38,7 +38,6 @@ task :install_deps do
   run_command("cd $GOPATH/src/github.com/sensu/uchiwa && " +
     "git checkout #{version} && cd -")
   run_command("cp -r $GOPATH/src/github.com/sensu/uchiwa/* .")
-  run_command("ls -l $GOPATH/src/github.com/sensu/uchiwa && ls -l .")
   run_command("npm install --production && npm run postinstall && " +
     "rm -rf node_modules")
   run_command("go get github.com/stretchr/testify")
@@ -128,4 +127,3 @@ task :smoke do
 end
 
 task :default => [:install_deps, :build, :package, :install, :smoke]
-task :test => [:install_deps, :run_tests]
