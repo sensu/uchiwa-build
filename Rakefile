@@ -35,7 +35,7 @@ end
 
 task :install_deps do
   run_command("go get github.com/sensu/uchiwa")
-  run_command("cp -r $GOPATH/src/github.com/sensu/uchiwa .")
+  run_command("cp -r $GOPATH/src/github.com/sensu/uchiwa/ .")
   run_command("git checkout #{version}")
   run_command("ls -l $GOPATH/src/github.com/sensu/uchiwa && ls -l .")
   run_command("npm install --production && npm run postinstall && " +
