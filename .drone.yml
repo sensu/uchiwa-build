@@ -1,0 +1,16 @@
+image: heavywater/uchiwa-build:v0.0.5
+env:
+  - ASSET_DIR=/tmp/assets
+  - GOPATH=${ASSET_DIR}/go
+  - GOBIN=${GOPATH}/bin
+script:
+  - yum clean all
+  - mkdir -p $GOBIN
+  - rm -rf ${GOPATH}/src/github.com/sensu/uchiwa
+  - ./scripts/build
+cache:
+  - /tmp/assets
+notify:
+  email:
+    recipients:
+      - simon.plourde@gmail.com
