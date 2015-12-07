@@ -40,8 +40,6 @@ task :install_deps do
   run_command("cp -r $GOPATH/src/github.com/sensu/uchiwa/. .")
   run_command("npm install --production && npm run postinstall && " +
     "rm -rf node_modules")
-  run_command("ls -l")
-  run_command("ls -l public/")
   run_command("go get github.com/stretchr/testify")
   run_command("go get github.com/tools/godep")
   run_command("export GOPATH=`$GOPATH/bin/godep path`")
