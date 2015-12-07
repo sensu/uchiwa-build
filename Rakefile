@@ -90,7 +90,7 @@ task :package do
           "--maintainer '#{maintainer}' " +
           "--category '#{category}' --url #{url} " +
           "--description '#{description}' -a #{platform} " +
-          "--config-files /etc/sensu/uchiwa.json opt etc var"
+          "--config-files /etc/sensu/uchiwa.json opt etc"
 
         puts "Running FPM command: #{fpm_cmd} ..."
         run_command(fpm_cmd)
