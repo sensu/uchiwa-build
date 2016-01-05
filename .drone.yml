@@ -1,4 +1,4 @@
-image: heavywater/uchiwa-build:v0.0.6
+image: heavywater/uchiwa-build:v0.0.7
 env:
   - ASSET_DIR=/tmp/assets
   - GOPATH=${ASSET_DIR}/go
