@@ -20,7 +20,7 @@ export PATH
 
 name=uchiwa
 program=/opt/uchiwa/bin/uchiwa
-args="-c /etc/sensu/uchiwa.json -p /opt/uchiwa/src/public"
+args="-c /etc/sensu/uchiwa.json -d /etc/sensu/dashboard.d -p /opt/uchiwa/src/public"
 pidfile="/var/run/$name.pid"
 
 [ -r /etc/default/$name ] && . /etc/default/$name
