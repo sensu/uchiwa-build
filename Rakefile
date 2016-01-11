@@ -85,12 +85,16 @@ task :package do
 
       [deb_scripts, rpm_scripts].each do |package_scripts|
         fpm_cmd = "fpm -s dir #{package_scripts} -n '#{name}' -C #{install_dir} " +
-          "-v #{version} --iteration #{iteration} --epoch 1 " +
+          "-v #{version} --iteration #{iteration} " +
           "--license '#{license}' --vendor '#{vendor}' " +
           "--maintainer '#{maintainer}' " +
           "--category '#{category}' --url #{url} " +
           "--description '#{description}' -a #{platform} " +
           "--config-files /etc/sensu/uchiwa.json opt etc"
+
+        if package_scripts == rpm_scripts
+          fpm_cmd << " --epoch 1"
+        end
 
         puts "Running FPM command: #{fpm_cmd} ..."
         run_command(fpm_cmd)
