@@ -75,7 +75,7 @@ task :package do
     "--rpm-group #{group} --before-install pkg_scripts/rpm/pre " +
     "--after-install pkg_scripts/rpm/post " +
     "--before-remove pkg_scripts/rpm/preun " +
-    "--after-remove pkg_scripts/rpm/postun"
+    "--after-remove pkg_scripts/rpm/postun --epoch 1"
 
   operating_systems.each do |os|
     platforms.each do |platform, go_arch|
@@ -91,10 +91,6 @@ task :package do
           "--category '#{category}' --url #{url} " +
           "--description '#{description}' -a #{platform} " +
           "--config-files /etc/sensu/uchiwa.json opt etc"
-
-        if package_scripts == rpm_scripts
-          fpm_cmd << " --epoch 1"
-        end
 
         puts "Running FPM command: #{fpm_cmd} ..."
         run_command(fpm_cmd)
