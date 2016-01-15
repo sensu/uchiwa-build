@@ -75,7 +75,7 @@ task :package do
     "--rpm-group #{group} --before-install pkg_scripts/rpm/pre " +
     "--after-install pkg_scripts/rpm/post " +
     "--before-remove pkg_scripts/rpm/preun " +
-    "--after-remove pkg_scripts/rpm/postun"
+    "--after-remove pkg_scripts/rpm/postun --epoch 1"
 
   operating_systems.each do |os|
     platforms.each do |platform, go_arch|
@@ -85,7 +85,7 @@ task :package do
 
       [deb_scripts, rpm_scripts].each do |package_scripts|
         fpm_cmd = "fpm -s dir #{package_scripts} -n '#{name}' -C #{install_dir} " +
-          "-v #{version} --iteration #{iteration} --epoch 1 " +
+          "-v #{version} --iteration #{iteration} " +
           "--license '#{license}' --vendor '#{vendor}' " +
           "--maintainer '#{maintainer}' " +
           "--category '#{category}' --url #{url} " +
