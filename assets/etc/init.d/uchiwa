@@ -29,7 +29,9 @@ pidfile="/var/run/$name.pid"
 start() {
 
   # Run the program!
-  su -s /bin/sh uchiwa -c "cd /opt/uchiwa/src && exec \"$program\" $args" >> /var/log/$name.log 2> /var/log/$name.err &
+  # Running the program as root makes it possible to bind to port 80 or 443 without make extra config-changes to apache or anything else
+  # This is now very useful since uchiwa is capable of doing SSL now
+  -s /bin/sh -c "cd /opt/uchiwa/src && exec \"$program\" $args" >> /var/log/$name.log 2> /var/log/$name.err &
 
   # Generate the pidfile from here. If we instead made the forked process
   # generate it there will be a race condition between the pidfile writing
