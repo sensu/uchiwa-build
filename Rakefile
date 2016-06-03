@@ -11,7 +11,7 @@ operating_systems = [
 
 platforms = {
   "i386" => "386",
-  "amd64" => "x86_64"
+  "amd64" => "amd64"
 }
 
 name = "uchiwa"
