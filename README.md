@@ -2,4 +2,4 @@
 
 This project builds packages for Uchiwa, a Sensu dashboard.
 
-Latest release: 0.14.5
+Latest release: 0.15.0
