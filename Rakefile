@@ -11,7 +11,7 @@ operating_systems = [
 
 platforms = {
   "i386" => "386",
-  "amd64" => "x86_64"
+  "amd64" => "amd64"
 }
 
 name = "uchiwa"
@@ -56,7 +56,7 @@ task :build do
     platforms.each do |platform, go_arch|
       puts "Building Uchiwa binary for #{platform} ..."
       output_path = "#{ASSET_DIR}/#{name}-#{go_os}-#{go_arch}"
-      run_command("$GOPATH/bin/godep go build -v -o #{output_path}")
+      run_command("GOOS=#{go_os} GOARCH=#{go_arch} $GOPATH/bin/godep go build -v -o #{output_path}")
     end
   end
 end
