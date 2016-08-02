@@ -41,12 +41,10 @@ task :install_deps do
   run_command("npm install --production && npm run postinstall && " +
     "rm -rf node_modules")
   run_command("go get github.com/stretchr/testify")
-  run_command("go get github.com/tools/godep")
-  run_command("export GOPATH=`$GOPATH/bin/godep path`")
 end
 
 task :run_tests do
-  run_command("$GOPATH/bin/godep go test -v ./...")
+  run_command("go test -v ./...")
   run_command("npm install -g grunt-cli")
   run_command("npm test")
 end
@@ -56,7 +54,7 @@ task :build do
     platforms.each do |platform, go_arch|
       puts "Building Uchiwa binary for #{platform} ..."
       output_path = "#{ASSET_DIR}/#{name}-#{go_os}-#{go_arch}"
-      run_command("GOOS=#{go_os} GOARCH=#{go_arch} $GOPATH/bin/godep go build -v -o #{output_path}")
+      run_command("GOOS=#{go_os} GOARCH=#{go_arch} go build -v -o #{output_path}")
     end
   end
 end
