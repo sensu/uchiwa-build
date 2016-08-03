@@ -113,7 +113,7 @@ end
 
 task :smoke do
   puts "Listing expected install directories ..."
-  run_command("ls -lR /opt/#{name}")
+  run_command("ls -l /opt/#{name}")
   run_command("ls -l /etc/sensu/uchiwa.json")
   run_command("ls -l /etc/init.d/#{name}")
 
@@ -124,4 +124,9 @@ task :smoke do
   run_command("cat /var/log/#{name}.err")
 end
 
-task :default => [:install_deps, :build, :package, :install, :smoke]
+task :cleanup do
+  puts "Removing the #{ASSET_DIR} directory..."
+  run_command("rm -rf #{ASSET_DIR}")
+end
+
+task :default => [:install_deps, :build, :package, :install, :smoke, :cleanup]
