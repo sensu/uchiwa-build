@@ -131,7 +131,7 @@ end
 
 task :cleanup do
   puts "Removing the #{ASSET_DIR} directory..."
-  run_command("rm -rf #{ASSET_DIR}")
+  run_command("rm -rf #{ASSET_DIR}/uchiwa*")
 end
 
 task :default => [:install_deps, :build, :package, :install, :smoke, :cleanup]
