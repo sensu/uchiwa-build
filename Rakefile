@@ -30,7 +30,7 @@ install_dir = "/tmp/install"
 dashboard_dir = File.join(install_dir, "opt", name)
 
 def run_command(command)
-  system(command)
+  system(command) or raise "Something went wrong with the last command"
 end
 
 task :install_deps do
