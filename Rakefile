@@ -1,4 +1,5 @@
 require "fileutils"
+require "systemu"
 
 ASSET_DIR = ENV.fetch("ASSET_DIR", "/tmp/assets")
 PKG_DIR = File.join(ASSET_DIR, "pkg")
@@ -29,11 +30,20 @@ group = "uchiwa"
 install_dir = "/tmp/install"
 dashboard_dir = File.join(install_dir, "opt", name)
 
-def run_command(command)
-  system(command) or raise "Something went wrong with the last command"
+def run_command(cmd)
+  status, stdout, stderr = systemu(cmd)
+  if output
+    puts stdout unless stdout.empty?
+    puts stderr unless stderr.empty?
+  end
+  unless status.exitstatus == 0
+    abort "The command '#{cmd}' failed'"
+  end
+  return true
 end
 
 task :install_deps do
+  run_command("go version")
   run_command("go get github.com/sensu/uchiwa")
   run_command("cd $GOPATH/src/github.com/sensu/uchiwa && " +
     "git checkout #{version} && cd -")
