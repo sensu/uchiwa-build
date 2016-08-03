@@ -1,5 +1,4 @@
 require "fileutils"
-require "systemu"
 
 ASSET_DIR = ENV.fetch("ASSET_DIR", "/tmp/assets")
 PKG_DIR = File.join(ASSET_DIR, "pkg")
@@ -31,13 +30,9 @@ install_dir = "/tmp/install"
 dashboard_dir = File.join(install_dir, "opt", name)
 
 def run_command(cmd)
-  status, stdout, stderr = systemu(cmd)
-  puts stdout unless stdout.empty?
-  puts stderr unless stderr.empty?
-  unless status.exitstatus == 0
-    abort "The command '#{cmd}' failed'"
-  end
-  return true
+  output = `#{cmd}`
+  puts output
+  abort "The last command failed" unless $?.success?
 end
 
 task :install_deps do
@@ -62,7 +57,9 @@ task :build do
     platforms.each do |platform, go_arch|
       puts "Building Uchiwa binary for #{platform} ..."
       output_path = "#{ASSET_DIR}/#{name}-#{go_os}-#{go_arch}"
-      run_command("GOOS=#{go_os} GOARCH=#{go_arch} go build -v -o #{output_path}")
+      ENV['GOOS'] = go_os
+      ENV['GOARCH'] = go_arch
+      run_command("go build -v -o #{output_path}")
     end
   end
 end
