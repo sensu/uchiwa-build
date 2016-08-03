@@ -32,10 +32,8 @@ dashboard_dir = File.join(install_dir, "opt", name)
 
 def run_command(cmd)
   status, stdout, stderr = systemu(cmd)
-  if output
-    puts stdout unless stdout.empty?
-    puts stderr unless stderr.empty?
-  end
+  puts stdout unless stdout.empty?
+  puts stderr unless stderr.empty?
   unless status.exitstatus == 0
     abort "The command '#{cmd}' failed'"
   end
