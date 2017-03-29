@@ -1,5 +1,5 @@
-## Uchiwa Build
+# Uchiwa Build
 
-This project builds packages for Uchiwa, a Sensu dashboard.
-
-Latest release: 0.22.1
+**ATTENTION: The uchiwa-build project has been deprecated and is no longer
+supported. Uchiwa is now built with Travis CI on the
+[Uchiwa](https://github.com/sensu/uchiwa) repository.**
